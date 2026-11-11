@@ -1,0 +1,1011 @@
+<!DOCTYPE html>  
+<html lang="es" class="scroll-smooth">  
+<head>  
+ <meta charset="UTF-8">  
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+ <title>DEO ARM — Welcome to my Wonderland</title>  
+   
+ <!-- Tailwind CSS CDN -->  
+ <script src="https://cdn.tailwindcss.com"></script>  
+   
+ <!-- Google Fonts -->  
+ <link rel="preconnect" href="https://fonts.googleapis.com">  
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
+ <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">  
+  
+ <script>  
+ tailwind.config = {  
+ theme: {  
+ extend: {  
+ colors: {  
+ 'black-obsidian': '#070707',  
+ 'black-card': '#0f0d0c',  
+ 'cream-bone': '#efe7d6',  
+ 'crimson-red': '#d61c38',  
+ 'crimson-dark': '#9e1025',  
+ 'sepia-gold': '#d4af37',  
+ 'muted-stone': '#8c857b',  
+ },  
+ fontFamily: {  
+ display: ['Cinzel Decorative', 'Playfair Display', 'serif'],  
+ serif: ['Playfair Display', 'Cormorant Garamond', 'serif'],  
+ garamond: ['Cormorant Garamond', 'serif'],  
+ mono: ['JetBrains Mono', 'monospace'],  
+ sans: ['Plus Jakarta Sans', 'sans-serif'],  
+ }  
+ }  
+ }  
+ }  
+ </script>  
+  
+ <style>  
+ :root {  
+ --cursor-x: 50vw;  
+ --cursor-y: 50vh;  
+ }  
+  
+ body {  
+ background-color: #070707;  
+ color: #efe7d6;  
+ overflow-x: hidden;  
+ position: relative;  
+ }  
+  
+ body.menu-open {  
+ overflow: hidden !important;  
+ }  
+  
+ /* MENÚ MÓVIL OVERLAY FIXED */  
+ .mobile-menu-overlay {  
+ position: fixed !important;  
+ top: 0 !important;  
+ left: 0 !important;  
+ width: 100vw !important;  
+ height: 100vh !important;  
+ z-index: 999999 !important;  
+ background: #070707 !important;  
+ backdrop-filter: blur(20px) !important;  
+ -webkit-backdrop-filter: blur(20px) !important;  
+ display: none;  
+ flex-direction: column;  
+ justify-content: center;  
+ padding: 2rem;  
+ box-sizing: border-box !important;  
+ }  
+  
+ .mobile-menu-overlay.open {  
+ display: flex !important;  
+ }  
+  
+ .mobile-menu-toggle {  
+ position: relative;  
+ z-index: 1000000 !important;  
+ }  
+  
+ /* Spotlight Cursor */  
+ .spotlight-overlay {  
+ position: fixed;  
+ inset: 0;  
+ pointer-events: none;  
+ z-index: 2;  
+ background: radial-gradient(  
+ min(80vw, 650px) circle at var(--cursor-x) var(--cursor-y),  
+ rgba(214, 28, 56, 0.22) 0%,  
+ rgba(150, 15, 35, 0.08) 45%,  
+ rgba(7, 7, 7, 0.98) 82%  
+ );  
+ transition: background 0.05s ease-out;  
+ }  
+  
+ /* Film Grain / Photocopy Texture */  
+ .noise-overlay {  
+ position: fixed;  
+ inset: 0;  
+ pointer-events: none;  
+ z-index: 9999;  
+ opacity: 0.05;  
+ background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");  
+ }  
+  
+ .editorial-grid {  
+ position: fixed;  
+ inset: 0;  
+ pointer-events: none;  
+ z-index: 1;  
+ background-size: clamp(40px, 8vw, 80px) clamp(40px, 8vw, 80px);  
+ background-image:   
+ linear-gradient(to right, rgba(239, 231, 214, 0.02) 1px, transparent 1px),  
+ linear-gradient(to bottom, rgba(239, 231, 214, 0.02) 1px, transparent 1px);  
+ }  
+  
+ .fluid-title {  
+ font-size: clamp(2.4rem, 8.5vw, 7.5rem);  
+ line-height: 0.88;  
+ }  
+  
+ .dashed-btn {  
+ border: 1px dashed rgba(239, 231, 214, 0.3);  
+ transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);  
+ }  
+ .dashed-btn:hover {  
+ border-color: #d61c38;  
+ color: #d61c38;  
+ box-shadow: 0 0 20px rgba(214, 28, 56, 0.3);  
+ transform: translateY(-2px);  
+ }  
+ .dashed-btn.active {  
+ background-color: #d61c38;  
+ border-style: solid;  
+ border-color: #d61c38;  
+ color: #efe7d6;  
+ box-shadow: 0 0 25px rgba(214, 28, 56, 0.5);  
+ }  
+  
+ .wonderland-title {  
+ color: #d61c38;  
+ text-shadow: 0 0 35px rgba(214, 28, 56, 0.5);  
+ animation: titlePulse 4s infinite alternate ease-in-out;  
+ }  
+  
+ @keyframes titlePulse {  
+ 0% { text-shadow: 0 0 20px rgba(214, 28, 56, 0.4); filter: brightness(1); }  
+ 100% { text-shadow: 0 0 50px rgba(214, 28, 56, 0.85), 0 0 80px rgba(214, 28, 56, 0.4); filter: brightness(1.2); }  
+ }  
+  
+ @keyframes slideHint {  
+ 0%, 100% { transform: translateX(0); opacity: 0.8; }  
+ 50% { transform: translateX(6px); opacity: 1; }  
+ }  
+ .animate-slide-hint {  
+ animation: slideHint 1.8s infinite ease-in-out;  
+ }  
+  
+ .crown-card {  
+ box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(214, 28, 56, 0.15);  
+ transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);  
+ }  
+ .crown-card:hover {  
+ border-color: rgba(214, 28, 56, 0.6);  
+ box-shadow: 0 30px 60px rgba(0, 0, 0, 0.95), 0 0 45px rgba(214, 28, 56, 0.35);  
+ }  
+  
+ .no-scrollbar::-webkit-scrollbar { display: none; }  
+ .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }  
+  
+ ::-webkit-scrollbar { width: 6px; }  
+ ::-webkit-scrollbar-track { background: #070707; }  
+ ::-webkit-scrollbar-thumb { background: #222; border-radius: 3px; }  
+ ::-webkit-scrollbar-thumb:hover { background: #d61c38; }  
+  
+ @keyframes bunnyGlow {  
+ 0%, 100% { filter: drop-shadow(0 0 5px rgba(239, 231, 214, 0.4)); opacity: 0.8; }  
+ 50% { filter: drop-shadow(0 0 15px rgba(214, 28, 56, 0.9)); opacity: 1; }  
+ }  
+ .glowing-bunny {  
+ animation: bunnyGlow 3s infinite ease-in-out;  
+ }  
+ </style>  
+</head>  
+<body class="font-sans antialiased selection:bg-crimson-red selection:text-cream-bone">  
+  
+ <div class="spotlight-overlay"></div>  
+ <div class="noise-overlay"></div>  
+ <div class="editorial-grid"></div>  
+  
+ <!-- HEADER -->  
+ <header class="fixed top-0 left-0 w-full h-20 bg-black-obsidian/90 backdrop-blur-md z-50 border-b border-cream-bone/10 px-4 sm:px-8 lg:px-12 flex items-center justify-between">  
+   
+ <a href="#entrance" class="flex items-center gap-3 group">  
+ <span class="text-crimson-red text-xl font-mono tracking-tighter group-hover:rotate-180 transition-transform duration-500">♦</span>  
+ <span class="font-serif font-black text-lg md:text-xl tracking-widest text-cream-bone uppercase group-hover:text-crimson-red transition-colors">DEO ARM</span>  
+ </a>  
+  
+ <nav class="hidden md:flex items-center gap-6 lg:gap-8 font-mono text-xs tracking-wider">  
+ <a href="#laboratory" class="text-cream-bone/70 hover:text-crimson-red transition-colors flex items-center gap-1 group">  
+ <span class="text-crimson-red font-bold">01</span>  
+ <span class="group-hover:translate-x-0.5 transition-transform">Laboratorio</span>  
+ </a>  
+ <a href="#real-world" class="text-cream-bone/70 hover:text-crimson-red transition-colors flex items-center gap-1 group">  
+ <span class="text-crimson-red font-bold">02</span>  
+ <span class="group-hover:translate-x-0.5 transition-transform">Trayectoria</span>  
+ </a>  
+ <a href="#rabbit-hole" class="text-cream-bone/70 hover:text-crimson-red transition-colors flex items-center gap-1 group">  
+ <span class="text-crimson-red font-bold">03</span>  
+ <span class="group-hover:translate-x-0.5 transition-transform">Gabinete</span>  
+ </a>  
+ <a href="#archives" class="text-cream-bone/70 hover:text-crimson-red transition-colors flex items-center gap-1 group">  
+ <span class="text-crimson-red font-bold">04</span>  
+ <span class="group-hover:translate-x-0.5 transition-transform">Archivos</span>  
+ </a>  
+ <a href="#find-me" class="text-cream-bone/70 hover:text-crimson-red transition-colors flex items-center gap-1 group">  
+ <span class="text-crimson-red font-bold">05</span>  
+ <span class="group-hover:translate-x-0.5 transition-transform">Contacto</span>  
+ </a>  
+ </nav>  
+  
+ <div class="flex items-center gap-3">  
+ <a href="#find-me" class="font-mono text-xs font-bold px-4 py-2 sm:px-5 sm:py-2.5 bg-crimson-red text-cream-bone hover:bg-crimson-dark transition-all duration-300 shadow-[0_0_15px_rgba(214,28,56,0.4)] flex items-center gap-2">  
+ <span>CV (PDF)</span>  
+ <span class="text-xs">↓</span>  
+ </a>  
+  
+ <button id="menu-toggle-btn" class="mobile-menu-toggle md:hidden p-2.5 text-cream-bone border border-white/25 hover:border-crimson-red bg-black-obsidian focus:outline-none" aria-label="Abrir Menú">  
+ <svg id="menu-hamburger-icon" class="w-6 h-6 fill-current" viewBox="0 0 24 24">  
+ <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>  
+ </svg>  
+ <svg id="menu-close-icon" class="w-6 h-6 fill-current hidden" viewBox="0 0 24 24">  
+ <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>  
+ </svg>  
+ </button>  
+ </div>  
+ </header>  
+  
+ <!-- MENÚ MÓVIL OVERLAY -->  
+ <div id="mobile-menu" class="mobile-menu-overlay">  
+ <div class="max-w-md mx-auto w-full">  
+ <div class="font-mono text-xs text-crimson-red mb-8 uppercase tracking-widest border-b border-crimson-red/30 pb-3 flex items-center justify-between">  
+ <span>[NAVEGACIÓN DEL CÓDICE]</span>  
+ <span class="text-cream-bone">DEO ARM</span>  
+ </div>  
+  
+ <nav class="flex flex-col gap-6 font-serif text-2xl sm:text-3xl">  
+ <a href="#laboratory" onclick="closeMobileMenu()" class="text-cream-bone hover:text-crimson-red transition-colors flex items-center justify-between border-b border-white/10 pb-4">  
+ <span class="flex items-center gap-3">  
+ <span class="font-mono text-xs text-crimson-red font-bold">01</span>  
+ <span>Laboratorio</span>  
+ </span>  
+ <span class="font-mono text-xs text-crimson-red">✦</span>  
+ </a>  
+ <a href="#real-world" onclick="closeMobileMenu()" class="text-cream-bone hover:text-crimson-red transition-colors flex items-center justify-between border-b border-white/10 pb-4">  
+ <span class="flex items-center gap-3">  
+ <span class="font-mono text-xs text-crimson-red font-bold">02</span>  
+ <span>Trayectoria</span>  
+ </span>  
+ <span class="font-mono text-xs text-crimson-red">✦</span>  
+ </a>  
+ <a href="#rabbit-hole" onclick="closeMobileMenu()" class="text-cream-bone hover:text-crimson-red transition-colors flex items-center justify-between border-b border-white/10 pb-4">  
+ <span class="flex items-center gap-3">  
+ <span class="font-mono text-xs text-crimson-red font-bold">03</span>  
+ <span>Gabinete de Curiosidades</span>  
+ </span>  
+ <span class="font-mono text-xs text-crimson-red">✦</span>  
+ </a>  
+ <a href="#archives" onclick="closeMobileMenu()" class="text-cream-bone hover:text-crimson-red transition-colors flex items-center justify-between border-b border-white/10 pb-4">  
+ <span class="flex items-center gap-3">  
+ <span class="font-mono text-xs text-crimson-red font-bold">04</span>  
+ <span>Archivos & Biblioteca</span>  
+ </span>  
+ <span class="font-mono text-xs text-crimson-red">✦</span>  
+ </a>  
+ <a href="#find-me" onclick="closeMobileMenu()" class="text-cream-bone hover:text-crimson-red transition-colors flex items-center justify-between border-b border-white/10 pb-4">  
+ <span class="flex items-center gap-3">  
+ <span class="font-mono text-xs text-crimson-red font-bold">05</span>  
+ <span>Transmisión & Contacto</span>  
+ </span>  
+ <span class="font-mono text-xs text-crimson-red">✦</span>  
+ </a>  
+ </nav>  
+ </div>  
+ </div>  
+  
+ <main class="relative z-10">  
+  
+ <!-- 1. PORTADA CON ÚLTIMO PROYECTO -->  
+ <section id="entrance" class="min-h-[calc(100vh-5rem)] mt-20 py-12 px-4 sm:px-8 lg:px-12 flex flex-col justify-center relative max-w-7xl mx-auto">  
+   
+ <div class="mb-4 flex items-center gap-3">  
+ <span class="inline-block w-2.5 h-2.5 rounded-full bg-crimson-red animate-ping"></span>  
+ <span class="font-mono text-xs uppercase tracking-widest text-crimson-red">[PORTAFOLIO & GABINETE DE CURIOSIDADES]</span>  
+ </div>  
+  
+ <h1 class="fluid-title font-serif font-black tracking-tight uppercase mb-4 text-cream-bone relative z-10">  
+ WELCOME TO MY<br>  
+ <span class="wonderland-title block font-display">WONDERLAND</span>  
+ </h1>  
+  
+ <p class="font-garamond italic text-xl sm:text-2xl lg:text-3xl text-cream-bone/90 mb-1 font-normal max-w-3xl relative z-10">  
+ Ideas convertidas en sistemas, espacios y herramientas.  
+ </p>  
+ <p class="font-serif italic text-sm sm:text-base text-muted-stone mb-6 tracking-wide relative z-10">  
+ entra, la puerta está abierta  
+ </p>  
+  
+ <!-- Botones de Navegación Rápida Centrados -->  
+ <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 mb-4 font-mono text-xs relative z-10">  
+ <a href="#laboratory" class="dashed-btn active px-4 py-2.5 uppercase">Proyectos</a>  
+ <a href="#real-world" class="dashed-btn px-4 py-2.5 uppercase text-cream-bone bg-black-obsidian/60">Trayectoria</a>  
+ <a href="#archives" class="dashed-btn px-4 py-2.5 uppercase text-cream-bone bg-black-obsidian/60">Archivos</a>  
+ <a href="#find-me" class="dashed-btn px-4 py-2.5 uppercase text-cream-bone bg-black-obsidian/60">Contacto</a>  
+ </div>  
+  
+ <!-- Versión ultra simplificada de Redes Sociales con ICONOS FUERA de la tarjeta -->  
+ <div class="flex items-center justify-center sm:justify-start gap-4 mb-10 relative z-10 py-1">  
+ <a href="https://www.facebook.com/share/1DYBUSJH47/" target="_blank" rel="noopener" title="Facebook" class="text-cream-bone hover:text-crimson-red transition-colors"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>  
+ <a href="https://instagram.com/_deo_arm" target="_blank" rel="noopener" title="Instagram" class="text-cream-bone hover:text-crimson-red transition-colors"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>  
+ <a href="https://tiktok.com/@_deo_arm" target="_blank" rel="noopener" title="TikTok" class="text-cream-bone hover:text-crimson-red transition-colors"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>  
+ <a href="https://x.com/_deo_arm" target="_blank" rel="noopener" title="X / Twitter" class="text-cream-bone hover:text-crimson-red transition-colors"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>  
+ <a href="https://wa.me/?text=Hey%20Deo%20Arm" target="_blank" rel="noopener" title="WhatsApp" class="text-cream-bone hover:text-crimson-red transition-colors"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>  
+ <a href="https://threads.net/@_deo_arm" target="_blank" rel="noopener" title="Threads" class="text-cream-bone hover:text-crimson-red transition-colors"><svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.186 24c-3.14 0-5.836-1.077-7.795-3.116C2.47 18.887 1.5 15.938 1.5 12.086c0-3.87 1.01-6.84 2.997-8.835C6.47 1.258 9.175.25 12.338.25c3.275 0 6.012 1.05 7.915 3.036 1.802 1.882 2.747 4.606 2.747 8.1 0 3.824-.962 6.776-2.859 8.775-1.92 2.023-4.665 3.089-7.955 3.089h-.002zm-.008-21.75c-2.58 0-4.73.796-6.22 2.298-1.503 1.517-2.258 3.847-2.258 6.924 0 3.064.737 5.412 2.19 6.98 1.48 1.597 3.582 2.448 6.25 2.448h.002c2.67 0 4.81-.828 6.36-2.463 1.528-1.611 2.3-3.992 2.3-7.075 0-2.888-.737-5.1-2.194-6.57-1.464-1.478-3.626-2.222-6.25-2.222h-.18z"/></svg></a>  
+ </div>  
+  
+ <!-- Tarjeta Cuadrada Reducida a 280px (w-[280px]) -->  
+ <div class="w-full sm:w-[280px] lg:absolute lg:bottom-12 lg:right-16 bg-black-card/95 border border-crimson-red/40 p-3.5 crown-card backdrop-blur-xl aspect-square flex flex-col justify-between z-20 shadow-[0_20px_50px_rgba(0,0,0,0.95)]">  
+ <div>  
+ <div class="flex justify-between items-center mb-1.5 font-mono text-[9px] text-muted-stone border-b border-white/10 pb-1">  
+ <span class="text-crimson-red font-bold">[ PROYECTO MÁS RECIENTE ]</span>  
+ <span class="text-muted-stone">✦ CVX-001</span>  
+ </div>  
+ <div class="w-full h-30 bg-[#0a0a0a] border border-white/5 relative overflow-hidden group mb-2">  
+ <div class="absolute inset-0 bg-gradient-to-t from-crimson-red/20 to-transparent opacity-30"></div>  
+ <img src="CVX-001.png" alt="Último proyecto" class="w-full h-full object-contain bg-black opacity-90 group-hover:scale-105 transition-transform duration-500">  
+ </div>  
+ <p class="text-[10px] font-mono text-cream-bone/90 leading-tight mb-2">  
+ <strong class="text-crimson-red">CHAVITXS PWA:</strong> App Web enfocada en tratamientos relacionados al VIH, acompañamiento, organización e información.  
+ </p>  
+ </div>  
+ <a href="#laboratory" class="dashed-btn w-full py-1.5 text-center font-mono text-[10px] uppercase text-cream-bone bg-crimson-red/20 border-crimson-red hover:bg-crimson-red block transition-colors font-bold">  
+ IR A EXPLORAR ↗  
+ </a>  
+ </div>  
+ </section>  
+  
+ <!-- 01 — LABORATORIO DE PROYECTOS -->  
+ <section id="laboratory" class="py-20 px-4 sm:px-8 lg:px-12 border-t border-cream-bone/10 max-w-7xl mx-auto">  
+ <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">  
+ <div>  
+ <span class="font-mono text-xs text-crimson-red tracking-widest uppercase block mb-2">01 — THE LABORATORY</span>  
+ <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-cream-bone">Portafolio de Proyectos</h2>  
+ </div>  
+ <div class="flex flex-wrap gap-2 font-mono text-xs" id="filter-container">  
+ <button onclick="filterProjects('all', this)" class="filter-btn active px-3.5 py-2 border border-crimson-red bg-crimson-red text-cream-bone transition-all">TODOS</button>  
+ <button onclick="filterProjects('digital', this)" class="filter-btn px-3.5 py-2 border border-cream-bone/20 text-cream-bone/70 hover:border-crimson-red hover:text-crimson-red transition-all">DIGITAL</button>  
+ <button onclick="filterProjects('media', this)" class="filter-btn px-3.5 py-2 border border-cream-bone/20 text-cream-bone/70 hover:border-crimson-red hover:text-crimson-red transition-all">MEDIA</button>  
+ <button onclick="filterProjects('spatial', this)" class="filter-btn px-3.5 py-2 border border-cream-bone/20 text-cream-bone/70 hover:border-crimson-red hover:text-crimson-red transition-all">ESPACIOS</button>  
+ <button onclick="filterProjects('systems', this)" class="filter-btn px-3.5 py-2 border border-cream-bone/20 text-cream-bone/70 hover:border-crimson-red hover:text-crimson-red transition-all">SISTEMAS</button>  
+ </div>  
+ </div>  
+  
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="projects-grid">  
+ <!-- Prototipo 1 -->  
+ <article class="project-item digital bg-black-card border border-white/10 p-6 flex flex-col justify-between hover:border-crimson-red transition-all group">  
+ <div>  
+ <div class="flex justify-between items-start mb-3">  
+ <span class="font-mono text-xs text-crimson-red uppercase">[EXPERIMENTOS DIGITALES]</span>  
+ <span class="font-mono text-xs text-muted-stone">PWA</span>  
+ </div>  
+ <h3 class="font-sans text-2xl font-bold text-cream-bone mb-2">CHAVIHTXS APP</h3>  
+ <p class="text-sm text-cream-bone/80 mb-6">PWA enfocada en tratamientos relacionados con VIH. Organización, registro y seguimiento de medicamentos. Citas de resurtido, citas de control, comunidad, información y más.</p>  
+ </div>  
+ <button onclick="openProjectModal('proj-1')" class="dashed-btn w-full py-2.5 text-center font-mono text-xs uppercase text-cream-bone">  
+ [ EXPANDIR REGISTRO + ]  
+ </button>  
+ </article>  
+  
+ <!-- Prototipo 2 -->  
+ <article class="project-item digital bg-black-card border border-white/10 p-6 flex flex-col justify-between hover:border-crimson-red transition-all group">  
+ <div>  
+ <div class="flex justify-between items-start mb-3">  
+ <span class="font-mono text-xs text-crimson-red uppercase">[EXPERIMENTOS DIGITALES]</span>  
+ <span class="font-mono text-xs text-muted-stone">EdTech</span>  
+ </div>  
+ <h3 class="font-sans text-2xl font-bold text-cream-bone mb-2">POHUALINES</h3>  
+ <p class="text-sm text-cream-bone/80 mb-6">Aplicación infantil conceptual orientada al fomento de la lectura mediante dinámicas interactivas y narrativa lúdica.</p>  
+ </div>  
+ <button onclick="openProjectModal('proj-2')" class="dashed-btn w-full py-2.5 text-center font-mono text-xs uppercase text-cream-bone">  
+ [ EXPANDIR REGISTRO + ]  
+ </button>  
+ </article>  
+  
+ <!-- Prototipo 3 -->  
+ <article class="project-item systems bg-black-card border border-white/10 p-6 flex flex-col justify-between hover:border-crimson-red transition-all group">  
+ <div>  
+ <div class="flex justify-between items-start mb-3">  
+ <span class="font-mono text-xs text-crimson-red uppercase">[SISTEMAS Y ORGANIZACIÓN]</span>  
+ <span class="font-mono text-xs text-muted-stone">Dashboard</span>  
+ </div>  
+ <h3 class="font-sans text-2xl font-bold text-cream-bone mb-2">AGENDA JURÍDICA DÍAZ & ASOC.</h3>  
+ <p class="text-sm text-cream-bone/80 mb-6">Sistema de gestión de expedientes, alertas de audiencias y control de clientes optimizado para despachos jurídicos.</p>  
+ </div>  
+ <button onclick="openProjectModal('proj-3')" class="dashed-btn w-full py-2.5 text-center font-mono text-xs uppercase text-cream-bone">  
+ [ EXPANDIR REGISTRO + ]  
+ </button>  
+ </article>  
+  
+ <!-- Prototipo 4 -->  
+ <article class="project-item spatial bg-black-card border border-white/10 p-6 flex flex-col justify-between hover:border-crimson-red transition-all group">  
+ <div>  
+ <div class="flex justify-between items-start mb-3">  
+ <span class="font-mono text-xs text-crimson-red uppercase">[ESCUELA Y MÁS]</span>  
+ <span class="font-mono text-xs text-muted-stone">AutoCAD</span>  
+ </div>  
+ <h3 class="font-sans text-2xl font-bold text-cream-bone mb-2">Análisis Urbano & Dibujo Técnico</h3>  
+ <p class="text-sm text-cream-bone/80 mb-6">Proyectos académicos y personales de representación arquitectónica, dibujo en AutoCAD y diagramas de análisis de sitio.</p>  
+ </div>  
+ <button onclick="openProjectModal('proj-4')" class="dashed-btn w-full py-2.5 text-center font-mono text-xs uppercase text-cream-bone">  
+ [ EXPANDIR REGISTRO + ]  
+ </button>  
+ </article>  
+  
+ <!-- Prototipo 5 -->  
+ <article class="project-item digital bg-black-card border border-white/10 p-6 flex flex-col justify-between hover:border-crimson-red transition-all group">  
+ <div>  
+ <div class="flex justify-between items-start mb-3">  
+ <span class="font-mono text-xs text-crimson-red uppercase">[AMIGOS]</span>  
+ <span class="font-mono text-xs text-muted-stone">PWA</span>  
+ </div>  
+ <h3 class="font-sans text-2xl font-bold text-cream-bone mb-2">ENIGMA PWA</h3>  
+ <p class="text-sm text-cream-bone/80 mb-6">ENIGMA es tu muro de confesiones y secretos anónimos en tiempo real. Un espacio digital seguro, efímero y sin filtros donde los pensamientos vuelan, los chismes cobran vida y todo desaparece sin dejar rastro después de 48 horas. ¿Te atreves a dejar tu huella o prefieres mantener el anonimato?</p>  
+ </div>  
+ <button onclick="openProjectModal('proj-5')" class="dashed-btn w-full py-2.5 text-center font-mono text-xs uppercase text-cream-bone">  
+ [ EXPANDIR REGISTRO + ]  
+ </button>  
+ </article>  
+ </div>  
+ </section>  
+  
+ <!-- 02 — TRAYECTORIA -->  
+ <section id="real-world" class="py-20 px-4 sm:px-8 lg:px-12 border-t border-cream-bone/10 max-w-7xl mx-auto">  
+ <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">  
+ <div>  
+ <span class="font-mono text-xs text-crimson-red tracking-widest uppercase block mb-2">02 — THE REAL WORLD</span>  
+ <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-cream-bone">Experiencia & Trayectoria</h2>  
+ </div>  
+ </div>  
+  
+ <div class="w-full flex justify-center mb-6">  
+ <div class="font-mono text-xs bg-crimson-red/10 border border-crimson-red/40 px-5 py-2.5 text-crimson-red flex items-center gap-3 animate-slide-hint shadow-[0_0_15px_rgba(214,28,56,0.2)]">  
+ <span class="text-base">◄</span>  
+ <span class="font-bold tracking-wider uppercase">DESLIZA PARA EXPLORAR</span>  
+ <span class="text-base">►</span>  
+ </div>  
+ </div>  
+  
+ <div class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6">  
+ <div class="min-w-[85vw] sm:min-w-[380px] md:min-w-0 snap-center bg-black-card border border-white/10 p-6 flex flex-col justify-between hover:border-crimson-red transition-all">  
+ <div>  
+ <span class="font-mono text-xs text-crimson-red font-bold block mb-2">[ACTUALIDAD]</span>  
+ <h3 class="text-xl font-bold text-cream-bone mb-1">Estrategia Digital, Comunicación & Operación</h3>  
+ <h4 class="font-serif italic text-muted-stone text-sm mb-4">Despacho Jurídico</h4>  
+ <p class="text-xs text-cream-bone/80 mb-6">Gestión de presencia digital, estructuración de archivos técnicos y soporte operacional en entornos administrativos.</p>  
+ </div>  
+ <button onclick="openModal('exp-1')" class="dashed-btn w-full py-2.5 text-center font-mono text-xs uppercase text-cream-bone">[ EXPANDIR REGISTRO + ]</button>  
+ </div>  
+  
+ <div class="min-w-[85vw] sm:min-w-[380px] md:min-w-0 snap-center bg-black-card border border-white/10 p-6 flex flex-col justify-between hover:border-crimson-red transition-all">  
+ <div>  
+ <span class="font-mono text-xs text-crimson-red font-bold block mb-2">[LIDERAZGO ESTUDIANTIL 2023-2026]</span>  
+ <h3 class="text-xl font-bold text-cream-bone mb-1">Vocal ➔ Coordinador ➔ Presidente</h3>  
+ <h4 class="font-serif italic text-muted-stone text-sm mb-4">Sociedad de Alumnos ESIA Tecamachalco</h4>  
+ <p class="text-xs text-cream-bone/80 mb-6">Liderazgo de equipos multidisciplinarios, diseño de campañas masivas y representación estudiantil.</p>  
+ </div>  
+ <button onclick="openModal('exp-2')" class="dashed-btn w-full py-2.5 text-center font-mono text-xs uppercase text-cream-bone">[ EXPANDIR REGISTRO + ]</button>  
+ </div>  
+  
+ <div class="min-w-[85vw] sm:min-w-[380px] md:min-w-0 snap-center bg-black-card border border-white/10 p-6 flex flex-col justify-between hover:border-crimson-red transition-all">  
+ <div>  
+ <span class="font-mono text-xs text-crimson-red font-bold block mb-2">[2021 - ACTUALIDAD]</span>  
+ <h3 class="text-xl font-bold text-cream-bone mb-1">Diagnóstico & Servicio Técnico Móvil</h3>  
+ <h4 class="font-serif italic text-muted-stone text-sm mb-4">Empresa Familiar de Tecnología</h4>  
+ <p class="text-xs text-cream-bone/80 mb-6">Atención a clientes, diagnóstico de hardware, sustitución de microcomponentes y gestión de inventario.</p>  
+ </div>  
+ <button onclick="openModal('exp-3')" class="dashed-btn w-full py-2.5 text-center font-mono text-xs uppercase text-cream-bone">[ EXPANDIR REGISTRO + ]</button>  
+ </div>  
+ </div>  
+ </section>  
+  
+ <!-- 03 — GABINETE DE CURIOSIDADES -->  
+ <section id="rabbit-hole" class="py-20 px-4 sm:px-8 lg:px-12 border-t border-cream-bone/10 max-w-7xl mx-auto">  
+ <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">  
+ <div>  
+ <span class="font-mono text-xs text-crimson-red tracking-widest uppercase block mb-2">03 — THE RABBIT HOLE</span>  
+ <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-cream-bone mb-2">Gabinete de Curiosidades</h2>  
+ <p class="font-garamond italic text-lg sm:text-xl text-muted-stone">Fichas de curaduría visual, escritos personales y experimentos conceptuales.</p>  
+ </div>  
+ </div>  
+  
+ <div class="w-full flex justify-center mb-6">  
+ <div class="font-mono text-xs bg-crimson-red/10 border border-crimson-red/40 px-5 py-2.5 text-crimson-red flex items-center gap-3 animate-slide-hint shadow-[0_0_15px_rgba(214,28,56,0.2)]">  
+ <span class="text-base">◄</span>  
+ <span class="font-bold tracking-wider uppercase">DESLIZA PARA EXPLORAR</span>  
+ <span class="text-base">►</span>  
+ </div>  
+ </div>  
+  
+ <div class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto no-scrollbar snap-x snap-mandatory pb-6">  
+ <!-- 1. Espacio para Posters / Imágenes -->  
+ <div class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center bg-black-card border border-white/15 p-6 flex flex-col justify-between">  
+ <div>  
+ <div class="flex justify-between items-start mb-3 border-b border-white/10 pb-2">  
+ <span class="font-mono text-[10px] text-crimson-red">[CURADURÍA VISUAL]</span>  
+ <span class="font-mono text-[10px] text-muted-stone">POSTERS & MOCKUPS</span>  
+ </div>  
+ <div class="w-full h-36 bg-black border border-white/10 mb-3 relative overflow-hidden group">  
+ <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=400&auto=format&fit=crop" alt="Poster architectural" class="w-full h-full object-cover opacity-70 group-hover:scale-105 transition-transform duration-500">  
+ </div>  
+ <h3 class="font-serif font-bold text-lg text-cream-bone mb-1">Galeria de Posters & Renders</h3>  
+ <p class="font-garamond italic text-xs text-cream-bone/80">Colección visual de carteles editoriales y estudios volumétricos espaciales.</p>  
+ </div>  
+ <div class="mt-4 pt-3 border-t border-dashed border-sepia-gold/30 bg-black/60 p-2.5 font-mono text-[10px] text-sepia-gold">  
+ <span class="text-crimson-red font-bold">✦ ESTADO:</span> Archivo activo.  
+ </div>  
+ </div>  
+  
+ <!-- 2. Espacio para Escritos Personales -->  
+ <div class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center bg-black-card border border-white/15 p-6 flex flex-col justify-between">  
+ <div>  
+ <div class="flex justify-between items-start mb-3 border-b border-white/10 pb-2">  
+ <span class="font-mono text-[10px] text-crimson-red">[BIBLIOTECA ÍNTIMA]</span>  
+ <span class="font-mono text-[10px] text-muted-stone">NOTAS & ENSAYOS</span>  
+ </div>  
+ <h3 class="font-serif font-bold text-lg text-cream-bone mb-2">Escritos & Notitas</h3>  
+ <p class="font-garamond italic text-sm text-cream-bone/90 mb-3">"El espacio no existe únicamente por sus muros, sino por cómo la sombra delimita lo sagrado."</p>  
+ </div>  
+ <div class="mt-4 pt-3 border-t border-dashed border-sepia-gold/30 bg-black/60 p-2.5 font-mono text-[10px] text-sepia-gold flex justify-between items-center">  
+ <span class="text-crimson-red font-bold">✦ LEER PDF:</span>  
+ <a href="#" class="text-cream-bone hover:underline">[ ABRIR NOTITA ↗ ]</a>  
+ </div>  
+ </div>  
+  
+ <!-- 3. Área para "Y si lo hacemos diferente" -->  
+ <div class="min-w-[85vw] sm:min-w-[340px] md:min-w-0 snap-center bg-black-card border border-white/15 p-6 flex flex-col justify-between">  
+ <div>  
+ <div class="flex justify-between items-start mb-3 border-b border-white/10 pb-2">  
+ <span class="font-mono text-[10px] text-crimson-red">[EXPERIMENTOS RADICALES]</span>  
+ <span class="font-mono text-[10px] text-muted-stone">WONDER-LAB</span>  
+ </div>  
+ <h3 class="font-serif font-bold text-lg text-cream-bone mb-2">¿Y si lo hacemos diferente?</h3>  
+ <p class="font-garamond italic text-sm text-cream-bone/90">Ideas absurdas, ocurrencias nocturnas y conceptos no convencionales que algún día cobrarán vida.</p>  
+ </div>  
+ <div class="mt-4 pt-3 border-t border-dashed border-sepia-gold/30 bg-black/60 p-2.5 font-mono text-[10px] text-sepia-gold">  
+ <span class="text-crimson-red font-bold">✦ NOTA:</span> Pensamiento lateral sin filtros.  
+ </div>  
+ </div>  
+ </div>  
+ </section>  
+  
+ <!-- 04 — ARCHIVOS & BIBLIOTECA -->  
+ <section id="archives" class="py-20 px-4 sm:px-8 lg:px-12 border-t border-cream-bone/10 max-w-7xl mx-auto relative">  
+ <div class="absolute top-6 right-8 pointer-events-none hidden sm:flex items-center gap-2 glowing-bunny">  
+ <span class="text-crimson-red text-xs font-mono">🐇</span>  
+ </div>  
+  
+ <div class="mb-12">  
+ <span class="font-mono text-xs text-crimson-red tracking-widest uppercase block mb-2">04 — THE ARCHIVES</span>  
+ <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-cream-bone mb-4">Biblioteca & Recursos</h2>  
+ </div>  
+  
+ <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">  
+ <div class="bg-black-card border border-white/10 p-6">  
+ <h3 class="font-mono text-xs uppercase text-crimson-red font-bold tracking-wider mb-4 pb-2 border-b border-white/10">[01] Aplicaciones </h3>  
+ <div class="space-y-3 font-mono text-xs">  
+ <div class="flex justify-between items-center py-2 border-b border-white/5">  
+ <span class="text-cream-bone/90">PWA CHAVITXS</span>  
+ <a href="https://chavitxscontactoficial-dot.github.io/CHAVIHTXS/" target="_blank" rel="noopener" class="text-crimson-red font-bold hover:underline">[ LANZAR ↗ ]</a>  
+ </div>  
+ <div class="flex justify-between items-center py-2 border-b border-white/5">  
+ <span class="text-cream-bone/90">POHUALINES EdTech</span>  
+ <a href="https://github.com" target="_blank" rel="noopener" class="text-crimson-red font-bold hover:underline">[ DEMO ↗ ]</a>  
+ </div>  
+ <div class="flex justify-between items-center py-2 border-b border-white/5">  
+ <span class="text-cream-bone/90">ENIGMA</span>  
+ <a href="https://github.com" target="_blank" rel="noopener" class="text-crimson-red font-bold hover:underline">[ DEMO ↗ ]</a>  
+ </div>  
+ <div class="flex justify-between items-center py-2 border-b border-white/5">  
+ <span class="text-cream-bone/90">TONALLI</span>  
+ <a href="https://github.com" target="_blank" rel="noopener" class="text-crimson-red font-bold hover:underline">[ DEMO ↗ ]</a>  
+ </div>  
+ <div class="flex justify-between items-center py-2">  
+ <span class="text-cream-bone/90">Agenda Jurídica v2</span>  
+ <a href="https://github.com" target="_blank" rel="noopener" class="text-crimson-red font-bold hover:underline">[ LOGIN ↗ ]</a>  
+ </div>  
+ </div>  
+ </div>  
+  
+ <div class="bg-black-card border border-white/10 p-6">  
+ <h3 class="font-mono text-xs uppercase text-crimson-red font-bold tracking-wider mb-4 pb-2 border-b border-white/10">[02] The Library</h3>  
+ <div class="space-y-3 font-mono text-xs">  
+ <div class="flex justify-between items-center py-2 border-b border-white/5">  
+ <span class="text-cream-bone/90">AUTOCAD</span>  
+ <a href="#" class="text-crimson-red font-bold hover:underline">[ IR ↓ ]</a>  
+ </div>  
+ <div class="flex justify-between items-center py-2 border-b border-white/5">  
+ <span class="text-cream-bone/90">Fichas Historia Arq.</span>  
+ <a href="#" class="text-crimson-red font-bold hover:underline">[ PROXIMAMENTE ]</a>  
+ </div>  
+ <div class="flex justify-between items-center py-2">  
+ <span class="text-cream-bone/90">Manifiesto Editorial</span>  
+ <a href="#" class="text-crimson-red font-bold hover:underline">[ LEER ↗ ]</a>  
+ </div>  
+ </div>  
+ </div>  
+  
+ <div class="bg-black-card border border-white/10 p-6">  
+ <h3 class="font-mono text-xs uppercase text-crimson-red font-bold tracking-wider mb-4 pb-2 border-b border-white/10">[03] The Toolbox</h3>  
+ <div class="space-y-3 font-mono text-xs">  
+ <div class="flex justify-between items-center py-2 border-b border-white/5">  
+ <span class="text-cream-bone/90">ARQUITECTURA</span>  
+ <a href="#" class="text-crimson-red font-bold hover:underline">[ REPOSITORIO ↗ ]</a>  
+ </div>  
+ <div class="flex justify-between items-center py-2 border-b border-white/5">  
+ <span class="text-cream-bone/90">CONCIENCIA SOCIAL</span>  
+ <a href="#" class="text-crimson-red font-bold hover:underline">[ COPY ]</a>  
+ </div>  
+ <div class="flex justify-between items-center py-2">  
+ <span class="text-cream-bone/90">ESCRITOS PERSONALES</span>  
+ <a href="#" class="text-crimson-red font-bold hover:underline">[ GIST ↗ ]</a>  
+ </div>  
+ </div>  
+ </div>  
+ </div>  
+ </section>  
+  
+ <!-- 05 — TRANSMISIÓN & REDES SOCIALES -->  
+ <section id="find-me" class="py-20 px-4 sm:px-8 lg:px-12 border-t border-cream-bone/10 max-w-7xl mx-auto">  
+ <div class="mb-12">  
+ <span class="font-mono text-xs text-crimson-red tracking-widest uppercase block mb-2">05 — TRANSMISIÓN & CANALES DE CONTACTO</span>  
+ <h2 class="font-serif text-3xl sm:text-5xl font-bold text-cream-bone mb-4">Find Me in Wonderland</h2>  
+ </div>  
+  
+ <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs mb-10">  
+ <div class="bg-black-card border border-white/10 p-6 flex flex-col justify-between">  
+ <div>  
+ <span class="text-muted-stone block mb-2 text-[10px] uppercase">[ESTUDIO & MARCA]</span>  
+ <span class="text-cream-bone font-bold text-lg block mb-1">DEO ARM</span>  
+ <span class="text-crimson-red text-xs">Ciudad de México / Remoto</span>  
+ </div>  
+ </div>  
+  
+ <div class="bg-black-card border border-white/10 p-6 flex flex-col justify-between">  
+ <div>  
+ <span class="text-muted-stone block mb-2 text-[10px] uppercase">[CORREO ELECTRÓNICO]</span>  
+ <span id="email-text" class="text-cream-bone font-bold text-sm block mb-3 break-all">deo.arm28@gmail.com</span>  
+ </div>  
+ <button onclick="copyEmail()" class="dashed-btn w-full py-2 text-center text-crimson-red font-bold uppercase flex items-center justify-center gap-2">  
+ <span id="copy-btn-text">COPIAR CORREO</span>  
+ <span>📋</span>  
+ </button>  
+ </div>  
+ </div>  
+  
+ <!-- Redes Sociales con Iconos -->  
+ <div class="bg-black-card border border-white/10 p-6 sm:p-8">  
+ <div class="font-mono text-xs text-crimson-red uppercase tracking-widest mb-6 border-b border-white/10 pb-3 flex justify-between items-center">  
+ <span>// Redes Sociales & Canales Oficiales (@_deo_arm)</span>  
+ <span class="text-muted-stone text-[10px]">CONEXIONES VIVAS</span>  
+ </div>  
+ <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 font-mono text-xs">  
+   
+ <!-- Facebook -->  
+ <a href="https://www.facebook.com/share/1DYBUSJH47/" target="_blank" rel="noopener" class="p-4 bg-black/60 border border-white/10 hover:border-crimson-red transition-all group flex flex-col justify-between h-28">  
+ <div class="flex items-center justify-between">  
+ <svg class="w-6 h-6 fill-cream-bone group-hover:fill-crimson-red transition-colors" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>  
+ <span class="text-crimson-red text-xs group-hover:translate-x-1 transition-transform">↗</span>  
+ </div>  
+ <div>  
+ <span class="text-muted-stone text-[10px] block uppercase">Facebook</span>  
+ <span class="text-cream-bone group-hover:text-crimson-red font-bold text-xs truncate block">Deo Arm</span>  
+ </div>  
+ </a>  
+  
+ <!-- Instagram -->  
+ <a href="https://instagram.com/_deo_arm" target="_blank" rel="noopener" class="p-4 bg-black/60 border border-white/10 hover:border-crimson-red transition-all group flex flex-col justify-between h-28">  
+ <div class="flex items-center justify-between">  
+ <svg class="w-6 h-6 fill-cream-bone group-hover:fill-crimson-red transition-colors" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>  
+ <span class="text-crimson-red text-xs group-hover:translate-x-1 transition-transform">↗</span>  
+ </div>  
+ <div>  
+ <span class="text-muted-stone text-[10px] block uppercase">Instagram</span>  
+ <span class="text-cream-bone group-hover:text-crimson-red font-bold text-xs truncate block">@_deo_arm</span>  
+ </div>  
+ </a>  
+  
+ <!-- TikTok -->  
+ <a href="https://tiktok.com/@_deo_arm" target="_blank" rel="noopener" class="p-4 bg-black/60 border border-white/10 hover:border-crimson-red transition-all group flex flex-col justify-between h-28">  
+ <div class="flex items-center justify-between">  
+ <svg class="w-6 h-6 fill-cream-bone group-hover:fill-crimson-red transition-colors" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>  
+ <span class="text-crimson-red text-xs group-hover:translate-x-1 transition-transform">↗</span>  
+ </div>  
+ <div>  
+ <span class="text-muted-stone text-[10px] block uppercase">TikTok</span>  
+ <span class="text-cream-bone group-hover:text-crimson-red font-bold text-xs truncate block">@_deo_arm</span>  
+ </div>  
+ </a>  
+  
+ <!-- Twitter / X -->  
+ <a href="https://x.com/_deo_arm" target="_blank" rel="noopener" class="p-4 bg-black/60 border border-white/10 hover:border-crimson-red transition-all group flex flex-col justify-between h-28">  
+ <div class="flex items-center justify-between">  
+ <svg class="w-6 h-6 fill-cream-bone group-hover:fill-crimson-red transition-colors" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>  
+ <span class="text-crimson-red text-xs group-hover:translate-x-1 transition-transform">↗</span>  
+ </div>  
+ <div>  
+ <span class="text-muted-stone text-[10px] block uppercase">Twitter / X</span>  
+ <span class="text-cream-bone group-hover:text-crimson-red font-bold text-xs truncate block">@_deo_arm</span>  
+ </div>  
+ </a>  
+  
+ <!-- WhatsApp -->  
+ <a href="https://wa.me/?text=Hey%20Deo%20Arm,%20soy%20______%20y%20quiero%20colaborar%20contigo" target="_blank" rel="noopener" class="p-4 bg-black/60 border border-white/10 hover:border-crimson-red transition-all group flex flex-col justify-between h-28">  
+ <div class="flex items-center justify-between">  
+ <svg class="w-6 h-6 fill-cream-bone group-hover:fill-crimson-red transition-colors" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>  
+ <span class="text-crimson-red text-xs group-hover:translate-x-1 transition-transform">↗</span>  
+ </div>  
+ <div>  
+ <span class="text-muted-stone text-[10px] block uppercase">WhatsApp</span>  
+ <span class="text-cream-bone group-hover:text-crimson-red font-bold text-xs truncate block">¡Quiero colaborar!</span>  
+ </div>  
+ </a>  
+  
+ <!-- Threads -->  
+ <a href="https://threads.net/@_deo_arm" target="_blank" rel="noopener" class="p-4 bg-black/60 border border-white/10 hover:border-crimson-red transition-all group flex flex-col justify-between h-28">  
+ <div class="flex items-center justify-between">  
+ <svg class="w-6 h-6 fill-cream-bone group-hover:fill-crimson-red transition-colors" viewBox="0 0 24 24"><path d="M12.186 24c-3.14 0-5.836-1.077-7.795-3.116C2.47 18.887 1.5 15.938 1.5 12.086c0-3.87 1.01-6.84 2.997-8.835C6.47 1.258 9.175.25 12.338.25c3.275 0 6.012 1.05 7.915 3.036 1.802 1.882 2.747 4.606 2.747 8.1 0 3.824-.962 6.776-2.859 8.775-1.92 2.023-4.665 3.089-7.955 3.089h-.002zm-.008-21.75c-2.58 0-4.73.796-6.22 2.298-1.503 1.517-2.258 3.847-2.258 6.924 0 3.064.737 5.412 2.19 6.98 1.48 1.597 3.582 2.448 6.25 2.448h.002c2.67 0 4.81-.828 6.36-2.463 1.528-1.611 2.3-3.992 2.3-7.075 0-2.888-.737-5.1-2.194-6.57-1.464-1.478-3.626-2.222-6.25-2.222h-.18z"/></svg>  
+ <span class="text-crimson-red text-xs group-hover:translate-x-1 transition-transform">↗</span>  
+ </div>  
+ <div>  
+ <span class="text-muted-stone text-[10px] block uppercase">Threads</span>  
+ <span class="text-cream-bone group-hover:text-crimson-red font-bold text-xs truncate block">@_deo_arm</span>  
+ </div>  
+ </a>  
+  
+ </div>  
+ </div>  
+ </section>  
+ </main>  
+  
+ <!-- MODAL GENERAL PARA EXPANDIR REGISTROS -->  
+ <div id="experience-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[999999] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">  
+ <div class="bg-black-obsidian border border-crimson-red max-w-2xl w-full p-6 sm:p-8 relative shadow-[0_0_50px_rgba(214,28,56,0.3)] max-h-[90vh] overflow-y-auto">  
+ <button onclick="closeModal()" class="absolute top-4 right-4 font-mono text-xs text-crimson-red border border-crimson-red/40 px-3 py-1 hover:bg-crimson-red hover:text-cream-bone transition-colors">  
+ [ CERRAR ✕ ]  
+ </button>  
+  
+ <span id="modal-tag" class="font-mono text-xs text-crimson-red font-bold block mb-2"></span>  
+ <h3 id="modal-title" class="font-serif text-2xl sm:text-3xl font-bold text-cream-bone mb-1"></h3>  
+ <h4 id="modal-subtitle" class="font-garamond italic text-muted-stone text-lg mb-6"></h4>  
+  
+ <div class="border-t border-white/10 pt-4 mb-6">  
+ <h5 class="font-mono text-xs text-crimson-red uppercase mb-2">[DETALLES Y ALCANCE]</h5>  
+ <ul id="modal-bullets" class="space-y-2 font-sans text-xs text-cream-bone/90 leading-relaxed list-disc list-inside"></ul>  
+ </div>  
+  
+ <div class="border-t border-white/10 pt-4 mb-6">  
+ <h5 class="font-mono text-xs text-crimson-red uppercase mb-2">[TECNOLOGÍAS / ENTORNO]</h5>  
+ <div id="modal-tools" class="flex flex-wrap gap-2 font-mono text-[11px]"></div>  
+ </div>  
+  
+ <!-- Botones del modal organizados en Grid -->  
+ <div id="modal-action-container" class="border-t border-white/10 pt-4 hidden">  
+ <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">  
+ <a id="modal-project-link" href="#" target="_blank" rel="noopener" class="dashed-btn w-full py-3 text-center font-mono text-xs font-bold uppercase text-cream-bone bg-crimson-red/20 border-crimson-red hover:bg-crimson-red flex items-center justify-center gap-2 transition-all">  
+ <span>VISITAR PROYECTO</span>  
+ <span>↗</span>  
+ </a>  
+ <a id="modal-donate-link" href="#find-me" onclick="closeModal()" class="dashed-btn w-full py-3 text-center font-mono text-xs font-bold uppercase text-cream-bone bg-crimson-red/20 border-crimson-red hover:bg-crimson-red flex items-center justify-center gap-2 transition-all">  
+ <span>APOYAR DESARROLLO</span>  
+ <span>✦</span>  
+ </a>  
+ </div>  
+ </div>  
+ </div>  
+ </div>  
+  
+ <!-- FOOTER -->  
+ <footer class="border-t border-cream-bone/10 py-12 px-4 sm:px-8 lg:px-12 font-mono text-xs text-center text-muted-stone relative z-10">  
+ <div class="max-w-7xl mx-auto flex justify-center items-center">  
+ <div class="text-cream-bone tracking-widest">DEO ARM © 2026 — WELCOME TO MY WONDERLAND</div>  
+ </div>  
+ </footer>  
+  
+ <script>  
+ // Spotlight Cursor  
+ document.addEventListener('pointermove', (e) => {  
+ document.documentElement.style.setProperty('--cursor-x', `${e.clientX}px`);  
+ document.documentElement.style.setProperty('--cursor-y', `${e.clientY}px`);  
+ });  
+  
+ // Mobile Menu  
+ const menuToggleBtn = document.getElementById('menu-toggle-btn');  
+ const mobileMenu = document.getElementById('mobile-menu');  
+ const hamburgerIcon = document.getElementById('menu-hamburger-icon');  
+ const closeIcon = document.getElementById('menu-close-icon');  
+  
+ function toggleMobileMenu() {  
+ const isOpen = mobileMenu.classList.contains('open');  
+ if (isOpen) { closeMobileMenu(); } else { openMobileMenu(); }  
+ }  
+  
+ function openMobileMenu() {  
+ mobileMenu.classList.add('open');  
+ document.body.classList.add('menu-open');  
+ hamburgerIcon.classList.add('hidden');  
+ closeIcon.classList.remove('hidden');  
+ }  
+  
+ function closeMobileMenu() {  
+ mobileMenu.classList.remove('open');  
+ document.body.classList.remove('menu-open');  
+ hamburgerIcon.classList.add('hidden');  
+ closeIcon.classList.remove('hidden');  
+ }  
+  
+ menuToggleBtn.addEventListener('click', toggleMobileMenu);  
+  
+ function filterProjects(category, btnElement) {  
+ const items = document.querySelectorAll('.project-item');  
+ const buttons = document.querySelectorAll('.filter-btn');  
+  
+ buttons.forEach(btn => {  
+ btn.classList.remove('active', 'bg-crimson-red', 'border-crimson-red', 'text-cream-bone');  
+ btn.classList.add('border-cream-bone/20', 'text-cream-bone/70');  
+ });  
+  
+ btnElement.classList.add('active', 'bg-crimson-red', 'border-crimson-red', 'text-cream-bone');  
+ btnElement.classList.remove('border-cream-bone/20', 'text-cream-bone/70');  
+  
+ items.forEach(item => {  
+ if (category === 'all' || item.classList.contains(category)) {  
+ item.style.display = 'flex';  
+ } else {  
+ item.style.display = 'none';  
+ }  
+ });  
+ }  
+  
+ const modalDatabase = {  
+ 'proj-1': {  
+ tag: '[DIGITAL EXPERIMENTS — PWA]',  
+ title: 'CHAVITXS',  
+ subtitle: 'Sistema Web Progresivo de Salud',  
+ bullets: [  
+ 'Arquitectura ligera basada en Vanilla JS, HTML5 y CSS3 modular.',  
+ 'Enfoque absoluto en privacidad local sin dependencia de servidores externos.',  
+ 'Diseño responsivo optimizado para dispositivos móviles y de escritorio.'  
+ ],  
+ tools: ['PWA', 'JavaScript', 'Tailwind', 'Privacy First'],  
+ url: 'https://chavitxscontactoficial-dot.github.io/CHAVIHTXS/',
+ donateUrl: 'https://link.mercadopago.com.mx/deoarm'  
+ },  
+ 'proj-2': {  
+ tag: '[MEDIA & EDTECH]',  
+ title: 'POHUALINES',  
+ subtitle: 'Plataforma Infantil Interactiva',  
+ bullets: [  
+ 'Prototipo de interfaz orientado a fomentar la lectura narrativa en infancias.',  
+ 'Gamificación de contenidos y flujos de usuario intuitivos.',  
+ 'Ilustraciones vectoriales adaptativas.'  
+ ],  
+ tools: ['UX/UI', 'EdTech', 'Prototipado', 'Gamificación'],  
+ url: 'https://github.com',
+ donateUrl: 'https://link.mercadopago.com.mx/deoarm'  
+ },  
+ 'proj-3': {  
+ tag: '[SYSTEMS & DASHBOARD]',  
+ title: 'AGENDA JURÍDICA DÍAZ & ASOC.',  
+ subtitle: 'Sistema de Gestión Interna',  
+ bullets: [  
+ 'Control de expedientes, alertas de audiencias y seguimiento de clientes.',  
+ 'Interfaz de alta densidad informativa optimizada para despachos.',  
+ 'Estructuración modular de datos.'  
+ ],  
+ tools: ['Dashboard', 'Gestión', 'Frontend', 'Legal-Tech'],  
+ url: 'https://github.com',
+ donateUrl: 'https://link.mercadopago.com.mx/deoarm'  
+ },  
+ 'proj-4': {  
+ tag: '[SPACES & URBAN IDEAS]',  
+ title: 'Análisis Urbano & Dibujo Técnico',  
+ subtitle: 'Representación en AutoCAD',  
+ bullets: [  
+ 'Levantamientos arquitectónicos y diagramas de sitio.',  
+ 'Precisión milimétrica en cotas, ejes y zonificación.',  
+ 'Representación gráfica rigurosa.'  
+ ],  
+ tools: ['AutoCAD', 'Urbanismo', 'Arquitectura', 'Dibujo Técnico'],  
+ url: '#'  
+ },  
+ 'proj-5': {  
+ tag: '[ENIGMA APP]',  
+ title: 'ENIGMA PWA',  
+ subtitle: 'Plataforma de Confesiones & Secretos Anónimos',  
+ bullets: [  
+ 'Muro efímero en tiempo real con eliminación automática en 48 horas.',  
+ 'Encriptación de publicaciones y total privacidad de identidad.',  
+ 'Interfaz minimalista basada en interacción en tiempo real.'  
+ ],  
+ tools: ['PWA', 'Real-time', 'Privacy', 'Crypto'],  
+ url: 'https://github.com',
+ donateUrl: 'https://link.mercadopago.com.mx/deoarm'  
+ },  
+ 'exp-1': {  
+ tag: '[2024 — ACTUALIDAD]',  
+ title: 'Estrategia Digital, Comunicación & Apoyo Operativo',  
+ subtitle: 'Despacho Jurídico',  
+ bullets: [  
+ 'Estructuración y digitalización de expedientes y archivos de alta confidencialidad.',  
+ 'Diseño de imagen y presencia digital en redes profesionales.',  
+ 'Implementación de flujos de organización documental.'  
+ ],  
+ tools: ['Notion', 'Adobe Suite', 'Gestión de Archivo', 'Estrategia Digital']  
+ },  
+ 'exp-2': {  
+ tag: '[TRAYECTORIA ESTUDIANTIL]',  
+ title: 'Vocal de Medios ➔ Coordinador ➔ Presidente',  
+ subtitle: 'Sociedad de Alumnos ESIA Tecamachalco',  
+ bullets: [  
+ 'Representación de la comunidad estudiantil ante autoridades del IPN.',  
+ 'Dirección y logística de eventos académicos y culturales masivos.',  
+ 'Diseño y difusión de comunicados institucionales.'  
+ ],  
+ tools: ['Liderazgo', 'Gestión de Equipos', 'Diseño Editorial', 'Comunicación']  
+ },  
+ 'exp-3': {  
+ tag: '[DIAGNÓSTICO TÉCNICO]',  
+ title: 'Diagnóstico & Servicio Técnico Móvil',  
+ subtitle: 'Empresa Familiar de Tecnología',  
+ bullets: [  
+ 'Diagnóstico de fallas en placas lógicas, pantallas y baterías de smartphones.',  
+ 'Gestión de proveedores y logística de partes de repuesto.',  
+ 'Atención personalizada y resolución inmediata de problemas técnicos.'  
+ ],  
+ tools: ['Hardware Móvil', 'Atención al Cliente', 'Logística', 'Diagnóstico']  
+ }  
+ };  
+  
+ function openModal(key) {  
+ const data = modalDatabase[key];  
+ if (!data) return;  
+ renderModalContent(data);  
+ }  
+  
+ function openProjectModal(key) {  
+ const data = modalDatabase[key];  
+ if (!data) return;  
+ renderModalContent(data);  
+ }  
+  
+ function renderModalContent(data) {  
+ document.getElementById('modal-tag').innerText = data.tag;  
+ document.getElementById('modal-title').innerText = data.title;  
+ document.getElementById('modal-subtitle').innerText = data.subtitle;  
+  
+ const bulletsList = document.getElementById('modal-bullets');  
+ bulletsList.innerHTML = data.bullets.map(b => `<li>${b}</li>`).join('');  
+  
+ const toolsBox = document.getElementById('modal-tools');  
+ toolsBox.innerHTML = data.tools.map(t => `<span class="px-2 py-1 bg-white/5 border border-white/10 text-cream-bone/80">${t}</span>`).join('');  
+  
+ const actionContainer = document.getElementById('modal-action-container');  
+ const projectLink = document.getElementById('modal-project-link');  
+ const donateLink = document.getElementById('modal-donate-link');  
+  
+ if (data.url) {  
+ projectLink.href = data.url;  
+ donateLink.href = data.donateUrl || '#find-me';  
+ actionContainer.classList.remove('hidden');  
+ } else {  
+ actionContainer.classList.add('hidden');  
+ }  
+  
+ document.getElementById('experience-modal').classList.remove('opacity-0', 'pointer-events-none');  
+ }  
+  
+ function closeModal() {  
+ document.getElementById('experience-modal').classList.add('opacity-0', 'pointer-events-none');  
+ }  
+  
+ function copyEmail() {  
+ const email = document.getElementById('email-text').innerText;  
+ const dummy = document.createElement('textarea');  
+ document.body.appendChild(dummy);  
+ dummy.value = email;  
+ dummy.select();  
+ document.execCommand('copy');  
+ document.body.removeChild(dummy);  
+  
+ const btnText = document.getElementById('copy-btn-text');  
+ btnText.innerText = '¡COPIADO!';  
+ setTimeout(() => { btnText.innerText = 'COPIAR CORREO'; }, 2000);  
+ }  
+ </script>  
+</body>  
+</html>
